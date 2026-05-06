@@ -96,7 +96,7 @@ export const initLatentSpace = () => {
       nodes: [
         { id: 'd3', isReal: false },
         { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', shortLabel: '04', bluf: 'The balkanization of the web into competing sovereign stacks and the end of seamless digital globalization.', url: 'primer/module-04.html', color: 0x5e84c6, size: 1.5, isReal: true },
-        { id: 'p1', type: 'research', title: 'Group 1', shortLabel: 'G1', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p1', type: 'research', title: 'AI & State Surveillance', shortLabel: 'G1', bluf: 'Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'p3', type: 'research', title: 'Group 3', shortLabel: 'G3', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-3/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd4', isReal: false },
         { id: 'p2', type: 'research', title: 'Group 2', shortLabel: 'G2', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
