@@ -97,9 +97,9 @@ export const initLatentSpace = () => {
         { id: 'd3', isReal: false },
         { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', shortLabel: '04', bluf: 'The balkanization of the web into competing sovereign stacks and the end of seamless digital globalization.', url: 'primer/module-04.html', color: 0x5e84c6, size: 1.5, isReal: true },
         { id: 'p1', type: 'research', title: 'AI & State Surveillance', shortLabel: 'G1', bluf: 'Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
-        { id: 'p3', type: 'research', title: 'Group 3', shortLabel: 'G3', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-3/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p3', type: 'research', title: 'The Invisible Thirst', shortLabel: 'G3', bluf: 'A visual investigation of AI data centers, water scarcity, and the missing facility-level data that weakens environmental governance.', directUrl: 'projects/group-3/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd4', isReal: false },
-        { id: 'p2', type: 'research', title: 'Group 2', shortLabel: 'G2', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
+        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", shortLabel: 'G2', bluf: 'An interactive op-ed on orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
@@ -109,14 +109,14 @@ export const initLatentSpace = () => {
         { id: 'd5', isReal: false },
         { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
-        { id: 'p5', type: 'research', title: 'Group 5', shortLabel: 'G5', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', shortLabel: 'G5', bluf: 'A field report on how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd7', isReal: false }
       ]
     },
     {
       x: 10, // Scaled in from 17
       nodes: [
-        { id: 'p4', type: 'research', title: 'Group 4', shortLabel: 'G4', bluf: 'Cohort sandbox reserved for student research briefs, prototypes, and visual experiments.', directUrl: 'projects/group-4/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p4', type: 'research', title: 'Group 4', shortLabel: 'G4', bluf: 'Awaiting final project submission; this node still points to the isolated Group 4 sandbox.', directUrl: 'projects/group-4/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd8', isReal: false },
         { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', shortLabel: '07', bluf: 'Tracing competing intellectual frames, from realism to techno-accelerationism, that now shape policy imagination.', url: 'primer/module-07.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd9', isReal: false },
