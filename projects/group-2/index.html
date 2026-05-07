@@ -1,29 +1,988 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Next Frontier of AI Isn't a Model. It's an Orbit.</title>
+    <meta
+      name="description"
+      content="An interactive op-ed on the geopolitics of AI data centers in space."
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#05070f" />
 
-<head>
-    <meta charset="UTF-8">
-    <title>Group 2</title>
-    <style>
-        body {
-            font-family: monospace;
-            background: #e0f2fe;
-            color: #0f172a;
-            padding: 2rem;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
-        h1 {
-            color: #0284c7;
-            border-bottom: 2px solid #0284c7;
-            padding-bottom: 0.5rem;
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/stage.css" />
+    <link rel="stylesheet" href="styles/scenes.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#text-version">Skip to plain-text version</a>
 
-<body>
-    <h1>Group 2</h1>
-    <p>This is the isolated sandbox for Group 2. Students can upload their own HTML, CSS, React builds, or Three.js
-        projects here without breaking the main course Hub.</p>
-</body>
+    <!-- Persistent cosmic stage: pinned to viewport, driven by scroll progress -->
+    <div class="stage" aria-hidden="true">
+      <div class="sky" data-layer="sky"></div>
+      <canvas class="starfield" data-layer="stars"></canvas>
 
+      <svg
+        class="earth"
+        data-layer="earth"
+        viewBox="-1000 -1000 2000 2000"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          <radialGradient id="earthCore" cx="40%" cy="40%" r="70%">
+            <stop offset="0%" stop-color="#3c6fb0" />
+            <stop offset="55%" stop-color="#17335f" />
+            <stop offset="100%" stop-color="#050a1a" />
+          </radialGradient>
+          <radialGradient id="earthGlow" cx="50%" cy="50%" r="60%">
+            <stop offset="70%" stop-color="rgba(125, 249, 255, 0)" />
+            <stop offset="92%" stop-color="rgba(125, 249, 255, 0.18)" />
+            <stop offset="100%" stop-color="rgba(125, 249, 255, 0)" />
+          </radialGradient>
+        </defs>
+        <circle r="1000" fill="url(#earthGlow)" />
+        <circle r="960" fill="url(#earthCore)" />
+        <!-- Stylised land masses -->
+        <g class="earth-land" opacity="0.55">
+          <path
+            d="M -500 -200 Q -380 -260 -220 -220 Q -120 -180 -90 -100 Q -150 -40 -280 -30 Q -420 -60 -500 -200 Z"
+            fill="#1f4f3a"
+          />
+          <path
+            d="M 80 -340 Q 260 -380 420 -300 Q 520 -200 460 -100 Q 320 -60 180 -140 Q 60 -240 80 -340 Z"
+            fill="#204a38"
+          />
+          <path
+            d="M -140 140 Q 20 120 180 200 Q 260 340 160 460 Q 20 520 -80 420 Q -200 300 -140 140 Z"
+            fill="#1d4430"
+          />
+        </g>
+      </svg>
+
+      <!-- Orbital rings that fade in at LEO and beyond -->
+      <svg class="orbits" data-layer="orbits" viewBox="-1000 -1000 2000 2000">
+        <g fill="none" stroke-linecap="round">
+          <ellipse class="orbit orbit-1" cx="0" cy="0" rx="1060" ry="1060" />
+          <ellipse class="orbit orbit-2" cx="0" cy="0" rx="1180" ry="1180" />
+          <ellipse class="orbit orbit-3" cx="0" cy="0" rx="1320" ry="1320" />
+          <ellipse class="orbit orbit-4" cx="0" cy="0" rx="1480" ry="1480" />
+        </g>
+        <g class="sats" data-layer="sats"></g>
+      </svg>
+
+      <!-- Launchpad BACKGROUND: horizon + ground + pad + tower (paints behind rocket) -->
+      <div class="launchpad launchpad-bg" data-layer="launchpad-bg">
+
+        <svg class="pad-mountains" viewBox="0 0 1600 220" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d="M 0 220 L 0 160 L 80 128 L 160 150 L 240 100 L 320 138 L 420 90 L 520 132 L 600 112 L 700 150 L 800 118 L 900 145 L 1000 108 L 1100 142 L 1220 105 L 1340 138 L 1460 120 L 1600 155 L 1600 220 Z"
+            fill="#05080f"
+          />
+          <path
+            d="M 0 220 L 0 185 L 140 165 L 280 180 L 420 155 L 580 178 L 720 160 L 880 182 L 1020 164 L 1180 180 L 1340 168 L 1500 182 L 1600 175 L 1600 220 Z"
+            fill="#080b14"
+            opacity="0.9"
+          />
+        </svg>
+
+        <div class="pad-horizon-lights" aria-hidden="true">
+          <span style="left: 12%"></span>
+          <span style="left: 22%"></span>
+          <span style="left: 68%"></span>
+          <span style="left: 74%"></span>
+          <span style="left: 82%"></span>
+          <span style="left: 91%"></span>
+        </div>
+
+        <!-- Concrete pad disc (slim, sits below the rocket, no longer overlaps its body) -->
+        <div class="pad-base" aria-hidden="true"></div>
+        <!-- Glowing flame trench -->
+        <div class="pad-trench" aria-hidden="true"></div>
+
+        <!-- Service tower / gantry (behind rocket) -->
+        <svg
+          class="pad-tower"
+          viewBox="-60 0 120 260"
+          preserveAspectRatio="xMidYEnd meet"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"  stop-color="#1c222f" />
+              <stop offset="50%" stop-color="#2a3142" />
+              <stop offset="100%" stop-color="#12161f" />
+            </linearGradient>
+          </defs>
+
+          <line x1="-22" y1="260" x2="-14" y2="0" stroke="url(#steel)" stroke-width="3" />
+          <line x1="22"  y1="260" x2="14"  y2="0" stroke="url(#steel)" stroke-width="3" />
+
+          <g stroke="#1a1f2b" stroke-width="1.2">
+            <line x1="-21" y1="248" x2="21"  y2="232" />
+            <line x1="21"  y1="248" x2="-21" y2="232" />
+            <line x1="-20" y1="220" x2="20"  y2="204" />
+            <line x1="20"  y1="220" x2="-20" y2="204" />
+            <line x1="-19" y1="192" x2="19"  y2="176" />
+            <line x1="19"  y1="192" x2="-19" y2="176" />
+            <line x1="-18" y1="164" x2="18"  y2="148" />
+            <line x1="18"  y1="164" x2="-18" y2="148" />
+            <line x1="-17" y1="136" x2="17"  y2="120" />
+            <line x1="17"  y1="136" x2="-17" y2="120" />
+            <line x1="-16" y1="108" x2="16"  y2="92"  />
+            <line x1="16"  y1="108" x2="-16" y2="92"  />
+            <line x1="-15" y1="80"  x2="15"  y2="64"  />
+            <line x1="15"  y1="80"  x2="-15" y2="64"  />
+            <line x1="-14.5" y1="52" x2="14.5" y2="36" />
+            <line x1="14.5"  y1="52" x2="-14.5" y2="36" />
+          </g>
+
+          <g stroke="#2a3142" stroke-width="1.6">
+            <line x1="-22" y1="232" x2="22"  y2="232" />
+            <line x1="-21" y1="204" x2="21"  y2="204" />
+            <line x1="-20" y1="176" x2="20"  y2="176" />
+            <line x1="-19" y1="148" x2="19"  y2="148" />
+            <line x1="-18" y1="120" x2="18"  y2="120" />
+            <line x1="-17" y1="92"  x2="17"  y2="92"  />
+            <line x1="-16" y1="64"  x2="16"  y2="64"  />
+            <line x1="-15" y1="36"  x2="15"  y2="36"  />
+          </g>
+
+          <line x1="0" y1="36" x2="0" y2="-14" stroke="#2a3142" stroke-width="2" />
+          <circle cx="0" cy="-16" r="1.8" fill="#9ba2b3" />
+          <circle class="tower-beacon" cx="0" cy="8" r="2.6" fill="#ff3b20" />
+          <circle class="tower-lamp lamp-a" cx="-16" cy="208" r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-b" cx="16"  cy="176" r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-c" cx="-14" cy="140" r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-d" cx="14"  cy="96"  r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-e" cx="-12" cy="60"  r="1.4" fill="#ffb37a" />
+        </svg>
+      </div>
+
+      <!-- Rocket: scales with viewport, rises with scroll progress -->
+      <svg
+        class="rocket"
+        data-layer="rocket"
+        viewBox="-80 -220 160 500"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
+        <defs>
+          <!-- Brushed-metal hull with a soft specular highlight -->
+          <linearGradient id="hull" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#5a6270" />
+            <stop offset="25%"  stop-color="#b7bdc9" />
+            <stop offset="50%"  stop-color="#eef1f6" />
+            <stop offset="72%"  stop-color="#aab0bc" />
+            <stop offset="100%" stop-color="#3d424d" />
+          </linearGradient>
+          <linearGradient id="hullShadow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="rgba(0,0,0,0.45)" />
+            <stop offset="40%"  stop-color="rgba(0,0,0,0)" />
+            <stop offset="60%"  stop-color="rgba(0,0,0,0)" />
+            <stop offset="100%" stop-color="rgba(0,0,0,0.55)" />
+          </linearGradient>
+          <linearGradient id="nose" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#ffb578" />
+            <stop offset="35%"  stop-color="#ff7a3a" />
+            <stop offset="100%" stop-color="#c93819" />
+          </linearGradient>
+          <linearGradient id="noseShine" x1="0.25" y1="0" x2="0.55" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.55)" />
+            <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+          </linearGradient>
+          <linearGradient id="fin" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a2f3a" />
+            <stop offset="100%" stop-color="#0d1018" />
+          </linearGradient>
+          <linearGradient id="engineBell" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#3a3f4b" />
+            <stop offset="60%"  stop-color="#1b1e26" />
+            <stop offset="100%" stop-color="#0a0c12" />
+          </linearGradient>
+
+          <!-- Flame gradients: hot core → yellow → orange → smoke -->
+          <radialGradient id="flameCore" cx="50%" cy="15%" r="85%">
+            <stop offset="0%"   stop-color="#ffffff" />
+            <stop offset="30%"  stop-color="#fff4b0" />
+            <stop offset="60%"  stop-color="rgba(255,220,120,0.4)" />
+            <stop offset="100%" stop-color="rgba(255,180,60,0)" />
+          </radialGradient>
+          <radialGradient id="flameMid" cx="50%" cy="10%" r="90%">
+            <stop offset="0%"   stop-color="#fff1a0" />
+            <stop offset="35%"  stop-color="#ffb347" />
+            <stop offset="70%"  stop-color="#ff5a1f" />
+            <stop offset="100%" stop-color="rgba(255,90,31,0)" />
+          </radialGradient>
+          <radialGradient id="flameOuter" cx="50%" cy="5%" r="95%">
+            <stop offset="0%"   stop-color="rgba(255,140,60,0.55)" />
+            <stop offset="50%"  stop-color="rgba(255,80,30,0.35)" />
+            <stop offset="100%" stop-color="rgba(200,50,20,0)" />
+          </radialGradient>
+          <radialGradient id="smoke" cx="50%" cy="30%" r="80%">
+            <stop offset="0%"   stop-color="rgba(240,230,220,0.55)" />
+            <stop offset="60%"  stop-color="rgba(180,170,170,0.15)" />
+            <stop offset="100%" stop-color="rgba(140,135,140,0)" />
+          </radialGradient>
+
+          <!-- Bell-mouth heat glow -->
+          <radialGradient id="bellGlow" cx="50%" cy="100%" r="60%">
+            <stop offset="0%"   stop-color="rgba(255,160,80,0.9)" />
+            <stop offset="100%" stop-color="rgba(255,120,40,0)" />
+          </radialGradient>
+        </defs>
+
+        <!-- Exhaust plume: stacked gradient layers with shock diamonds -->
+        <g class="rocket-flame" style="transform-origin: 0 135px;">
+          <!-- Diffuse smoke/haze that trails far below -->
+          <ellipse class="plume-smoke" cx="0" cy="240" rx="38" ry="120" fill="url(#smoke)" />
+          <!-- Outer flame envelope -->
+          <path
+            class="plume-outer"
+            d="M -28 140 Q -44 200 -18 260 Q 0 290 18 260 Q 44 200 28 140 Z"
+            fill="url(#flameOuter)"
+          />
+          <!-- Mid flame -->
+          <path
+            class="plume-mid"
+            d="M -20 138 Q -32 190 -12 240 Q 0 262 12 240 Q 32 190 20 138 Z"
+            fill="url(#flameMid)"
+          />
+          <!-- Hot inner core -->
+          <path
+            class="plume-core"
+            d="M -10 135 Q -16 170 -6 205 Q 0 220 6 205 Q 16 170 10 135 Z"
+            fill="url(#flameCore)"
+          />
+          <!-- Mach/shock diamonds: small bright nodes stacked down the plume -->
+          <g class="plume-diamonds" opacity="0.85">
+            <ellipse cx="0" cy="158" rx="5" ry="3" fill="#fff7d0" />
+            <ellipse cx="0" cy="176" rx="4" ry="2.4" fill="#fff2b0" opacity="0.85" />
+            <ellipse cx="0" cy="194" rx="3.2" ry="1.9" fill="#ffe890" opacity="0.75" />
+            <ellipse cx="0" cy="210" rx="2.5" ry="1.5" fill="#ffd270" opacity="0.6" />
+          </g>
+        </g>
+
+        <!-- Engine-bell heat halo (sits just below the nozzle) -->
+        <ellipse class="bell-halo" cx="0" cy="138" rx="24" ry="8" fill="url(#bellGlow)" />
+
+        <!-- Fins: swept, sleek -->
+        <path class="fin fin-left"  d="M -14 95 L -38 148 L -14 152 Z" fill="url(#fin)" />
+        <path class="fin fin-right" d="M  14 95 L  38 148 L  14 152 Z" fill="url(#fin)" />
+        <!-- Fin rim highlights -->
+        <path d="M -14 95 L -38 148" stroke="rgba(255,255,255,0.08)" stroke-width="0.6" fill="none" />
+        <path d="M  14 95 L  38 148" stroke="rgba(255,255,255,0.08)" stroke-width="0.6" fill="none" />
+
+        <!-- Engine bell/nozzle -->
+        <path d="M -16 120 L -20 140 L 20 140 L 16 120 Z" fill="url(#engineBell)" />
+        <rect x="-20" y="138" width="40" height="3" fill="#050810" />
+
+        <!-- Main body (slim, tall, refined) -->
+        <rect x="-16" y="-110" width="32" height="230" rx="5" fill="url(#hull)" />
+        <!-- Subtle vertical shadow to give the hull depth -->
+        <rect x="-16" y="-110" width="32" height="230" rx="5" fill="url(#hullShadow)" opacity="0.7" />
+
+        <!-- Panel / stage-separation lines -->
+        <line x1="-16" y1="-30" x2="16" y2="-30" stroke="rgba(0,0,0,0.35)" stroke-width="0.7" />
+        <line x1="-16" y1="20"  x2="16" y2="20"  stroke="rgba(0,0,0,0.35)" stroke-width="0.7" />
+        <line x1="-16" y1="70"  x2="16" y2="70"  stroke="rgba(0,0,0,0.35)" stroke-width="0.7" />
+
+        <!-- Subtle rivets (just dots) -->
+        <g fill="rgba(0,0,0,0.3)">
+          <circle cx="-12" cy="-30" r="0.8" /><circle cx="12" cy="-30" r="0.8" />
+          <circle cx="-12" cy="20"  r="0.8" /><circle cx="12" cy="20"  r="0.8" />
+          <circle cx="-12" cy="70"  r="0.8" /><circle cx="12" cy="70"  r="0.8" />
+        </g>
+
+        <!-- Agency marking -->
+        <text x="0" y="-60" text-anchor="middle" font-family="JetBrains Mono, monospace"
+              font-size="7" font-weight="700" fill="rgba(20,30,60,0.85)" letter-spacing="0.5">AI-01</text>
+
+        <!-- Window with inner glow -->
+        <circle cx="0" cy="0" r="8" fill="#061128" stroke="rgba(125,249,255,0.7)" stroke-width="1.4" />
+        <circle cx="0" cy="0" r="7" fill="rgba(125,249,255,0.08)" />
+        <circle cx="-2.4" cy="-2.4" r="2.2" fill="#7df9ff" opacity="0.65" />
+
+        <!-- Nose cone -->
+        <path d="M -16 -110 Q 0 -215 16 -110 Z" fill="url(#nose)" />
+        <!-- Nose highlight -->
+        <path d="M -10 -105 Q -4 -180 2 -180 Q 1 -150 -4 -105 Z" fill="url(#noseShine)" />
+        <!-- Nose tip glint -->
+        <circle cx="0" cy="-200" r="2" fill="#fff4b0" opacity="0.9" />
+      </svg>
+
+      <!-- Orbital satellite cluster: fades in above ~1000 km, replacing the rocket -->
+      <svg
+        class="cluster"
+        data-layer="cluster"
+        viewBox="-220 -180 440 360"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#1a3a7a" />
+            <stop offset="50%" stop-color="#2558b8" />
+            <stop offset="100%" stop-color="#0c1f50" />
+          </linearGradient>
+          <linearGradient id="chassis" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#4a5160" />
+            <stop offset="50%"  stop-color="#c9ced8" />
+            <stop offset="100%" stop-color="#32363f" />
+          </linearGradient>
+          <linearGradient id="rackGlow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="rgba(125,249,255,0)" />
+            <stop offset="50%"  stop-color="rgba(125,249,255,0.6)" />
+            <stop offset="100%" stop-color="rgba(125,249,255,0)" />
+          </linearGradient>
+          <radialGradient id="linkPulse" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"  stop-color="rgba(125,249,255,0.9)" />
+            <stop offset="100%" stop-color="rgba(125,249,255,0)" />
+          </radialGradient>
+        </defs>
+
+        <!-- Data-link lines between hub and satellites -->
+        <g class="cluster-links" stroke="rgba(125,249,255,0.35)" stroke-width="0.7" stroke-dasharray="3 4" fill="none">
+          <line class="link link-1" x1="0" y1="0" x2="-150" y2="-95" />
+          <line class="link link-2" x1="0" y1="0" x2="155" y2="-70" />
+          <line class="link link-3" x1="0" y1="0" x2="130" y2="105" />
+          <line class="link link-4" x1="0" y1="0" x2="-135" y2="95" />
+        </g>
+
+        <!-- Hub: the orbital AI data center -->
+        <g class="sat-hub">
+          <!-- Solar panel wings -->
+          <g class="sat-wings">
+            <!-- Left wing -->
+            <rect x="-120" y="-26" width="82" height="52" fill="url(#panel)" />
+            <g stroke="rgba(255,255,255,0.18)" stroke-width="0.6">
+              <line x1="-99"  y1="-26" x2="-99"  y2="26" />
+              <line x1="-78"  y1="-26" x2="-78"  y2="26" />
+              <line x1="-57"  y1="-26" x2="-57"  y2="26" />
+              <line x1="-120" y1="0"   x2="-38"  y2="0" />
+            </g>
+            <rect x="-120" y="-26" width="82" height="52" fill="none" stroke="rgba(200,210,230,0.4)" stroke-width="0.8" />
+            <!-- Boom -->
+            <rect x="-38" y="-2" width="10" height="4" fill="#6a7180" />
+            <!-- Right wing -->
+            <rect x="38" y="-26" width="82" height="52" fill="url(#panel)" />
+            <g stroke="rgba(255,255,255,0.18)" stroke-width="0.6">
+              <line x1="57"  y1="-26" x2="57"  y2="26" />
+              <line x1="78"  y1="-26" x2="78"  y2="26" />
+              <line x1="99"  y1="-26" x2="99"  y2="26" />
+              <line x1="38"  y1="0"   x2="120" y2="0" />
+            </g>
+            <rect x="38" y="-26" width="82" height="52" fill="none" stroke="rgba(200,210,230,0.4)" stroke-width="0.8" />
+            <rect x="28" y="-2" width="10" height="4" fill="#6a7180" />
+          </g>
+
+          <!-- Chassis: GPU rack vibe -->
+          <rect x="-28" y="-34" width="56" height="68" rx="3" fill="url(#chassis)" />
+          <rect x="-28" y="-34" width="56" height="68" rx="3" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="0.6" />
+
+          <!-- Rack slots with glowing data bar -->
+          <g>
+            <rect x="-24" y="-28" width="48" height="6" rx="1" fill="#0f1422" />
+            <rect x="-24" y="-28" width="48" height="6" rx="1" fill="url(#rackGlow)" opacity="0.8" />
+            <rect x="-24" y="-18" width="48" height="6" rx="1" fill="#0f1422" />
+            <rect x="-24" y="-18" width="30" height="6" rx="1" fill="url(#rackGlow)" opacity="0.55" />
+            <rect x="-24" y="-8"  width="48" height="6" rx="1" fill="#0f1422" />
+            <rect x="-24" y="-8"  width="40" height="6" rx="1" fill="url(#rackGlow)" opacity="0.7" />
+            <rect x="-24" y="2"   width="48" height="6" rx="1" fill="#0f1422" />
+            <rect x="-24" y="2"   width="22" height="6" rx="1" fill="url(#rackGlow)" opacity="0.5" />
+            <rect x="-24" y="12"  width="48" height="6" rx="1" fill="#0f1422" />
+            <rect x="-24" y="12"  width="44" height="6" rx="1" fill="url(#rackGlow)" opacity="0.75" />
+            <rect x="-24" y="22"  width="48" height="6" rx="1" fill="#0f1422" />
+            <rect x="-24" y="22"  width="34" height="6" rx="1" fill="url(#rackGlow)" opacity="0.6" />
+          </g>
+
+          <!-- Status lights -->
+          <circle class="led led-1" cx="-22" cy="-30" r="1.4" fill="#7df9ff" />
+          <circle class="led led-2" cx="22"  cy="-30" r="1.4" fill="#ff6b2b" />
+
+          <!-- Antenna dish on top -->
+          <line x1="0" y1="-34" x2="0" y2="-44" stroke="#8a92a3" stroke-width="1.4" />
+          <ellipse cx="0" cy="-46" rx="7" ry="3" fill="#cfd5e2" stroke="#5a6070" stroke-width="0.5" />
+          <circle cx="0" cy="-46" r="1.3" fill="#ff6b2b" />
+
+          <!-- Thruster nozzles (small) -->
+          <rect x="-6" y="34" width="4" height="5" fill="#2a2f3a" />
+          <rect x="2"  y="34" width="4" height="5" fill="#2a2f3a" />
+        </g>
+
+        <!-- Companion satellite: upper-left -->
+        <g class="sat sat-a" transform="translate(-150, -95)">
+          <rect x="-28" y="-6" width="24" height="12" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="4"   y="-6" width="24" height="12" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="-4" y="-5" width="8" height="10" fill="#c9ced8" />
+          <circle cx="0" cy="0" r="1" fill="#7df9ff" />
+        </g>
+
+        <!-- Companion: upper-right -->
+        <g class="sat sat-b" transform="translate(155, -70)">
+          <rect x="-22" y="-5" width="18" height="10" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="4"   y="-5" width="18" height="10" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="-4" y="-4" width="8" height="8" fill="#c9ced8" />
+          <circle cx="0" cy="0" r="1" fill="#ff6b2b" />
+        </g>
+
+        <!-- Companion: lower-right -->
+        <g class="sat sat-c" transform="translate(130, 105)">
+          <rect x="-26" y="-5" width="22" height="10" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="4"   y="-5" width="22" height="10" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="-4" y="-4" width="8" height="8" fill="#c9ced8" />
+          <circle cx="0" cy="0" r="1" fill="#7df9ff" />
+        </g>
+
+        <!-- Companion: lower-left -->
+        <g class="sat sat-d" transform="translate(-135, 95)">
+          <rect x="-24" y="-5" width="20" height="10" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="4"   y="-5" width="20" height="10" fill="url(#panel)" stroke="rgba(200,210,230,0.35)" stroke-width="0.5" />
+          <rect x="-4" y="-4" width="8" height="8" fill="#c9ced8" />
+          <circle cx="0" cy="0" r="1" fill="#ff6b2b" />
+        </g>
+      </svg>
+
+      <!-- Launchpad FOREGROUND: umbilical arms + clamps + vapour, paints ON TOP
+           of the rocket so they visibly latch onto it. -->
+      <div class="launchpad launchpad-fg" data-layer="launchpad-fg">
+        <!-- Umbilical arms: three steel pipes from the service tower that
+             visibly attach to the rocket body and swing up/away at release. -->
+        <div class="pad-umbilicals" aria-hidden="true">
+          <span class="umbilical umbilical-top">
+            <span class="umbilical-head"></span>
+          </span>
+          <span class="umbilical umbilical-mid">
+            <span class="umbilical-head"></span>
+          </span>
+          <span class="umbilical umbilical-low">
+            <span class="umbilical-head"></span>
+          </span>
+        </div>
+
+        <!-- Hold-down clamps that release at T–0 -->
+        <div class="pad-clamps" aria-hidden="true">
+          <span class="clamp clamp-l"></span>
+          <span class="clamp clamp-r"></span>
+        </div>
+
+        <!-- Cryogenic vapour venting -->
+        <div class="pad-vapor" aria-hidden="true">
+          <span class="vapor v1"></span>
+          <span class="vapor v2"></span>
+          <span class="vapor v3"></span>
+          <span class="vapor v4"></span>
+        </div>
+      </div>
+
+      <!-- (Old launchpad block moved above the rocket.) -->
+      <div class="launchpad-legacy" hidden aria-hidden="true" style="display:none">
+
+        <svg class="pad-mountains-legacy" viewBox="0 0 1600 220" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d="M 0 220 L 0 160 L 80 128 L 160 150 L 240 100 L 320 138 L 420 90 L 520 132 L 600 112 L 700 150 L 800 118 L 900 145 L 1000 108 L 1100 142 L 1220 105 L 1340 138 L 1460 120 L 1600 155 L 1600 220 Z"
+            fill="#05080f"
+          />
+          <path
+            d="M 0 220 L 0 185 L 140 165 L 280 180 L 420 155 L 580 178 L 720 160 L 880 182 L 1020 164 L 1180 180 L 1340 168 L 1500 182 L 1600 175 L 1600 220 Z"
+            fill="#080b14"
+            opacity="0.9"
+          />
+        </svg>
+
+        <!-- Distant landing-pad / infrastructure lights, right horizon -->
+        <div class="pad-horizon-lights" aria-hidden="true">
+          <span style="left: 12%"></span>
+          <span style="left: 22%"></span>
+          <span style="left: 68%"></span>
+          <span style="left: 74%"></span>
+          <span style="left: 82%"></span>
+          <span style="left: 91%"></span>
+        </div>
+
+        <!-- Concrete pad + flame trench (a wide base ellipse with a dark trench) -->
+        <div class="pad-base" aria-hidden="true"></div>
+        <div class="pad-trench" aria-hidden="true"></div>
+
+        <!-- Service tower / gantry (SVG lattice) -->
+        <svg
+          class="pad-tower"
+          viewBox="-60 0 120 260"
+          preserveAspectRatio="xMidYEnd meet"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"  stop-color="#1c222f" />
+              <stop offset="50%" stop-color="#2a3142" />
+              <stop offset="100%" stop-color="#12161f" />
+            </linearGradient>
+          </defs>
+
+          <!-- Legs -->
+          <line x1="-22" y1="260" x2="-14" y2="0" stroke="url(#steel)" stroke-width="3" />
+          <line x1="22"  y1="260" x2="14"  y2="0" stroke="url(#steel)" stroke-width="3" />
+
+          <!-- Cross-bracing (X pattern up the tower) -->
+          <g stroke="#1a1f2b" stroke-width="1.2">
+            <line x1="-21" y1="248" x2="21"  y2="232" />
+            <line x1="21"  y1="248" x2="-21" y2="232" />
+            <line x1="-20" y1="220" x2="20"  y2="204" />
+            <line x1="20"  y1="220" x2="-20" y2="204" />
+            <line x1="-19" y1="192" x2="19"  y2="176" />
+            <line x1="19"  y1="192" x2="-19" y2="176" />
+            <line x1="-18" y1="164" x2="18"  y2="148" />
+            <line x1="18"  y1="164" x2="-18" y2="148" />
+            <line x1="-17" y1="136" x2="17"  y2="120" />
+            <line x1="17"  y1="136" x2="-17" y2="120" />
+            <line x1="-16" y1="108" x2="16"  y2="92"  />
+            <line x1="16"  y1="108" x2="-16" y2="92"  />
+            <line x1="-15" y1="80"  x2="15"  y2="64"  />
+            <line x1="15"  y1="80"  x2="-15" y2="64"  />
+            <line x1="-14.5" y1="52" x2="14.5" y2="36" />
+            <line x1="14.5"  y1="52" x2="-14.5" y2="36" />
+          </g>
+
+          <!-- Horizontal deck platforms -->
+          <g stroke="#2a3142" stroke-width="1.6">
+            <line x1="-22" y1="232" x2="22"  y2="232" />
+            <line x1="-21" y1="204" x2="21"  y2="204" />
+            <line x1="-20" y1="176" x2="20"  y2="176" />
+            <line x1="-19" y1="148" x2="19"  y2="148" />
+            <line x1="-18" y1="120" x2="18"  y2="120" />
+            <line x1="-17" y1="92"  x2="17"  y2="92"  />
+            <line x1="-16" y1="64"  x2="16"  y2="64"  />
+            <line x1="-15" y1="36"  x2="15"  y2="36"  />
+          </g>
+
+          <!-- Service / crew access arms reaching toward rocket (to the left) -->
+          <g stroke="#2a3142" stroke-width="2" fill="none">
+            <path d="M -22 80  L -60 82  L -60 88" />
+            <path d="M -21 150 L -58 152 L -58 158" />
+            <path d="M -20 210 L -56 212 L -56 220" />
+          </g>
+          <!-- Umbilical fuel lines (thin, white-ish) -->
+          <g stroke="#4a5060" stroke-width="0.8" fill="none" opacity="0.85">
+            <path d="M -22 82  L -56 82" />
+            <path d="M -21 152 L -54 152" />
+          </g>
+
+          <!-- Top mast + antenna -->
+          <line x1="0" y1="36" x2="0" y2="-14" stroke="#2a3142" stroke-width="2" />
+          <circle cx="0" cy="-16" r="1.8" fill="#9ba2b3" />
+          <!-- Red aviation warning light on top (blinks) -->
+          <circle class="tower-beacon" cx="0" cy="8" r="2.6" fill="#ff3b20" />
+          <!-- Orange work lights along the gantry -->
+          <circle class="tower-lamp lamp-a" cx="-16" cy="208" r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-b" cx="16"  cy="176" r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-c" cx="-14" cy="140" r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-d" cx="14"  cy="96"  r="1.4" fill="#ffb37a" />
+          <circle class="tower-lamp lamp-e" cx="-12" cy="60"  r="1.4" fill="#ffb37a" />
+        </svg>
+
+        <!-- Hold-down clamps around rocket base (just below it) -->
+        <div class="pad-clamps" aria-hidden="true">
+          <span class="clamp clamp-l"></span>
+          <span class="clamp clamp-r"></span>
+        </div>
+
+        <!-- Pre-launch cryogenic vapor venting from the rocket base -->
+        <div class="pad-vapor" aria-hidden="true">
+          <span class="vapor v1"></span>
+          <span class="vapor v2"></span>
+          <span class="vapor v3"></span>
+          <span class="vapor v4"></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Altitude HUD (top-level so it always floats above scene content) -->
+    <div class="hud" data-layer="hud">
+      <span class="hud-dot" aria-hidden="true"></span>
+      <span class="hud-altitude">T-00:00</span>
+    </div>
+
+    <!-- Scroll hint is now embedded in the liftoff scene below -->
+
+    <!-- The scroll track: its height drives the journey -->
+    <main class="track" id="track">
+      <!-- Scene 0: Liftoff -->
+      <section
+        class="scene scene-liftoff"
+        data-scene="liftoff"
+        data-range="0,0.10"
+        aria-labelledby="sc-liftoff-h"
+      >
+        <div class="scene-inner scene-inner--centered">
+          <p class="kicker" data-bind="liftoff.kicker"></p>
+          <h1 class="display" id="sc-liftoff-h" data-bind="liftoff.title"></h1>
+
+          <figure class="hero-video" aria-label="Intro video">
+            <div class="hero-video-frame">
+              <video
+                src="assets/intro.mp4"
+                controls
+                playsinline
+                preload="metadata"
+              ></video>
+            </div>
+          </figure>
+          <div class="scroll-hint" data-layer="hint" aria-hidden="true">
+            <span class="scroll-hint-label">Scroll to launch</span>
+            <span class="scroll-hint-arrow">↓</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 1: The strategic case for data centres in space -->
+      <section
+        class="scene scene-whyNow"
+        data-scene="whyNow"
+        data-range="0.10,0.42"
+        aria-labelledby="sc-whyNow-h"
+      >
+        <div class="scene-inner">
+          <header class="scene-head">
+            <p class="kicker" data-bind="whyNow.kicker"></p>
+            <h2 class="scene-heading" id="sc-whyNow-h" data-bind="whyNow.heading"></h2>
+            <hr class="scene-rule" aria-hidden="true" />
+            <p class="scene-lede has-dropcap" data-bind="whyNow.lede"></p>
+          </header>
+
+          <article class="act-article">
+            <!-- Section 1: the demand shock — chart floats inline here so the
+                 second paragraph (IEA figures) wraps around it, as in the PDF. -->
+            <p class="act-para" data-bind="whyNow.sections.0.body.0"></p>
+
+            <figure class="act-figure">
+              <img
+                src="assets/energy-chart.jpeg"
+                alt="Bar chart showing data centre electricity generation by energy source — Global, China, U.S. — 2025 vs 2035. Source: IEA / Statista."
+                loading="lazy"
+              />
+              <figcaption data-bind="whyNow.figure.caption"></figcaption>
+            </figure>
+
+            <p class="act-para" data-bind="whyNow.sections.0.body.1"></p>
+            <p class="act-para" data-bind="whyNow.sections.0.body.2"></p>
+            <p class="act-para" data-bind="whyNow.sections.0.body.3"></p>
+
+            <!-- Section 2: A sunnier solution -->
+            <h3 class="act-subhead" data-bind="whyNow.sections.1.subhead"></h3>
+            <p class="act-para" data-bind="whyNow.sections.1.body.0"></p>
+            <p class="act-para" data-bind="whyNow.sections.1.body.1"></p>
+
+            <!-- Wide diagram that caps the "sunnier solution" section. It's
+                 full-width (not floated) because it is essentially a chart
+                 panel; floating it would squeeze the labels. -->
+            <figure class="act-figure act-figure--wide">
+              <img
+                src="assets/space-network.png"
+                alt="Diagram of NTT and SKY Perfect JSAT's Space Integrated Computing Network — GEO and LEO satellites, high-altitude platforms, and terrestrial 5G/6G networks connected by optical links."
+                loading="lazy"
+              />
+              <figcaption>
+                Compute in space will be one layer of a wider network —
+                GEO and LEO satellites, high-altitude platforms and
+                terrestrial 5G/6G, linked by optical relays.
+                Source: NTT &amp; SKY Perfect JSAT,
+                <a
+                  href="https://group.ntt/en/newsrelease/2022/04/26/220426a.html"
+                  target="_blank"
+                  rel="noopener"
+                  >Space Integrated Computing Network</a
+                >.
+              </figcaption>
+            </figure>
+
+            <!-- Section 3: Space-euphoria is not all that simple -->
+            <h3 class="act-subhead" data-bind="whyNow.sections.2.subhead"></h3>
+            <p class="act-para" data-bind="whyNow.sections.2.body.0"></p>
+            <p class="act-para" data-bind="whyNow.sections.2.body.1"></p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Scene 1.5: Gallery — pinned split layout. The stage (rocket/cluster)
+           is muted during this moment so the images carry the frame. -->
+      <section
+        class="scene scene-gallery"
+        data-scene="gallery"
+        data-range="0.42,0.58"
+        aria-labelledby="sc-gallery-h"
+      >
+        <div class="gallery-sticky">
+          <div class="gallery-split">
+            <aside class="gallery-text">
+              <p class="gallery-kicker" data-bind="whyNow.gallery.kicker"></p>
+              <h2 class="gallery-heading" id="sc-gallery-h" data-bind="whyNow.gallery.heading"></h2>
+              <p class="gallery-body" data-bind="whyNow.gallery.text"></p>
+            </aside>
+            <ol class="gallery-grid" data-bind-list="whyNow.gallery.images" data-template="gimg">
+              <template data-template-id="gimg">
+                <li class="gallery-cell">
+                  <figure class="gallery-figure">
+                    <img data-field-attr="src|src" alt="" />
+                    <figcaption class="gallery-caption" data-field="title"></figcaption>
+                  </figure>
+                </li>
+              </template>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 2: Actors -->
+      <section
+        class="scene scene-actors"
+        data-scene="actors"
+        data-range="0.58,0.72"
+        aria-labelledby="sc-actors-h"
+      >
+        <div class="scene-inner">
+          <header class="scene-head">
+            <p class="kicker" data-bind="actors.kicker"></p>
+            <h2 class="scene-heading" id="sc-actors-h" data-bind="actors.heading"></h2>
+            <hr class="scene-rule" aria-hidden="true" />
+            <p class="scene-lede has-dropcap" data-bind="actors.lede"></p>
+          </header>
+
+          <article class="act-article">
+            <p class="act-para" data-bind="actors.sections.0.body.0"></p>
+            <p class="act-para" data-bind="actors.sections.0.body.1"></p>
+            <p class="act-para" data-bind="actors.sections.0.body.2"></p>
+
+            <h3 class="act-subhead" data-bind="actors.sections.1.subhead"></h3>
+            <p class="act-para" data-bind="actors.sections.1.body.0"></p>
+            <p class="act-para" data-bind="actors.sections.1.body.1"></p>
+
+            <h3 class="act-subhead" data-bind="actors.sections.2.subhead"></h3>
+            <p class="act-para" data-bind="actors.sections.2.body.0"></p>
+            <p class="act-para" data-bind="actors.sections.2.body.1"></p>
+
+            <h3 class="act-subhead" data-bind="actors.sections.3.subhead"></h3>
+            <p class="act-para" data-bind="actors.sections.3.body.0"></p>
+            <p class="act-para" data-bind="actors.sections.3.body.1"></p>
+
+            <h3 class="act-subhead" data-bind="actors.sections.4.subhead"></h3>
+            <p class="act-para act-para--closer" data-bind="actors.sections.4.body.0"></p>
+          </article>
+
+          <!-- Regional infomedia: US / China / EU ecosystems -->
+          <section class="orbital-map" aria-label="Regional orbital-compute ecosystems">
+            <header class="map-head">
+              <p class="map-kicker" data-bind="actors.map.kicker"></p>
+              <h3 class="map-heading" data-bind="actors.map.heading"></h3>
+              <p class="map-sub" data-bind="actors.map.sub"></p>
+            </header>
+            <div class="map-grid" data-bind-list="actors.regions" data-template="region">
+              <template data-template-id="region">
+                <article class="region-card">
+                  <header class="region-head">
+                    <span class="region-code" data-field="code"></span>
+                    <h4 class="region-name" data-field="name"></h4>
+                  </header>
+                  <p class="region-stance" data-field="stance"></p>
+                  <p class="region-approach" data-field="approach"></p>
+                  <div class="region-block">
+                    <h5 class="region-label">Public institutions</h5>
+                    <ul class="region-list" data-field-list="publicPlayers"></ul>
+                  </div>
+                  <div class="region-block">
+                    <h5 class="region-label">Private players</h5>
+                    <ul class="region-list" data-field-list="privatePlayers"></ul>
+                  </div>
+                </article>
+              </template>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Scene 3: Governance -->
+      <section
+        class="scene scene-governance"
+        data-scene="governance"
+        data-range="0.72,0.86"
+        aria-labelledby="sc-gov-h"
+      >
+        <div class="scene-inner">
+          <header class="scene-head">
+            <p class="kicker" data-bind="governance.kicker"></p>
+            <h2 class="scene-heading" id="sc-gov-h" data-bind="governance.heading"></h2>
+            <hr class="scene-rule" aria-hidden="true" />
+            <p class="scene-lede has-dropcap" data-bind="governance.lede"></p>
+          </header>
+
+          <article class="act-article">
+            <p class="act-para" data-bind="governance.intro.0"></p>
+            <p class="act-para" data-bind="governance.intro.1"></p>
+            <p class="act-para" data-bind="governance.intro.2"></p>
+            <p class="act-para" data-bind="governance.intro.3"></p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Scene 3.5: Regulation network — two-cluster diagram with ghost edges -->
+      <section
+        class="scene scene-regnet"
+        data-scene="regNet"
+        data-range="0.82,0.88"
+        aria-labelledby="sc-regnet-h"
+      >
+        <div class="regnet-sticky">
+          <header class="regnet-head">
+            <p class="regnet-kicker" data-bind="regNet.kicker"></p>
+            <h2 class="regnet-heading" id="sc-regnet-h" data-bind="regNet.heading"></h2>
+            <p class="regnet-lede" data-bind="regNet.lede"></p>
+          </header>
+          <div class="regnet-frame" data-regnet-frame data-beat="1">
+            <p class="regnet-cluster-label regnet-cluster-label--space">
+              <span class="rn-cluster-name" data-bind="regNet.spaceCluster.label"></span>
+              <span class="rn-cluster-sub" data-bind="regNet.spaceCluster.sub"></span>
+            </p>
+            <p class="regnet-cluster-label regnet-cluster-label--ai">
+              <span class="rn-cluster-name" data-bind="regNet.aiCluster.label"></span>
+              <span class="rn-cluster-sub" data-bind="regNet.aiCluster.sub"></span>
+            </p>
+            <div class="regnet-stage-wrap">
+              <div class="regnet-stage" data-regnet-stage></div>
+              <div class="rn-tooltip" data-regnet-tooltip role="tooltip" aria-hidden="true">
+                <p class="rn-tooltip-name" data-rn-tip-name></p>
+                <p class="rn-tooltip-meta" data-rn-tip-meta></p>
+                <p class="rn-tooltip-text" data-rn-tip-text></p>
+              </div>
+            </div>
+            <div class="regnet-caption-rail">
+              <p class="regnet-beat-label" data-regnet-beat-label></p>
+              <p class="regnet-caption" data-regnet-caption></p>
+            </div>
+          </div>
+          <p class="regnet-closer" data-bind="regNet.closer"></p>
+        </div>
+      </section>
+
+
+      <!-- Scene 4: Futures -->
+      <section
+        class="scene scene-futures"
+        data-scene="futures"
+        data-range="0.86,0.92"
+        aria-labelledby="sc-futures-h"
+      >
+        <div class="scene-inner">
+          <header class="scene-head">
+            <p class="kicker" data-bind="futures.kicker"></p>
+            <h2 class="scene-heading" id="sc-futures-h" data-bind="futures.heading"></h2>
+            <hr class="scene-rule" aria-hidden="true" />
+            <p class="scene-lede has-dropcap" data-bind="futures.lede"></p>
+          </header>
+
+          <article class="act-article">
+            <p class="act-para" data-bind="futures.geopolitics.intro.0"></p>
+            <p class="act-para" data-bind="futures.geopolitics.intro.1"></p>
+
+            <ol class="geo-shifts" data-bind-list="futures.geopolitics.shifts" data-template="geoshift">
+              <template data-template-id="geoshift">
+                <li class="geo-shift">
+                  <h4 class="geo-shift-title" data-field="title"></h4>
+                  <p class="geo-shift-body" data-field="body"></p>
+                  <p class="geo-shift-indicator" data-field="indicator"></p>
+                </li>
+              </template>
+            </ol>
+
+            <p class="act-para act-para--closer" data-bind="futures.geopolitics.closer"></p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Scene 4.5: Upcoming developments timeline (full-screen pinned) -->
+      <section
+        class="scene scene-timeline"
+        data-scene="timeline"
+        data-range="0.92,0.96"
+        aria-labelledby="sc-timeline-h"
+      >
+        <div class="timeline-sticky">
+          <header class="timeline-head">
+            <p class="timeline-kicker" data-bind="timeline.kicker"></p>
+            <h2 class="timeline-heading" id="sc-timeline-h" data-bind="timeline.heading"></h2>
+          </header>
+          <div class="timeline-chart" aria-hidden="false">
+            <p class="timeline-band-label timeline-band-top" data-bind="timeline.bands.top"></p>
+            <div class="timeline-grid" data-timeline-grid></div>
+            <p class="timeline-band-label timeline-band-bottom" data-bind="timeline.bands.bottom"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 4.75: Open Questions (3x2 flip cards) -->
+      <section
+        class="scene scene-openq"
+        data-scene="openQuestions"
+        data-range="0.96,0.99"
+        aria-labelledby="sc-openq-h"
+      >
+        <div class="scene-inner">
+          <header class="scene-head">
+            <p class="kicker" data-bind="openQuestions.kicker"></p>
+            <h2 class="scene-heading" id="sc-openq-h" data-bind="openQuestions.heading"></h2>
+            <hr class="scene-rule" aria-hidden="true" />
+            <p class="scene-lede has-dropcap" data-bind="openQuestions.lede"></p>
+            <p class="oq-hint" data-bind="openQuestions.hint"></p>
+          </header>
+          <ol class="oq-grid" data-bind-list="openQuestions.items" data-template="oq">
+            <template data-template-id="oq">
+              <li class="oq-card">
+                <button type="button" class="oq-flipper" aria-pressed="false">
+                  <span class="oq-face oq-face--front">
+                    <span class="oq-corner" aria-hidden="true">↻</span>
+                    <span class="oq-title" data-field="title"></span>
+                    <span class="oq-cue">Tap to reveal</span>
+                  </span>
+                  <span class="oq-face oq-face--back">
+                    <span class="oq-question" data-field="question"></span>
+                    <span class="oq-body" data-field="body"></span>
+                  </span>
+                </button>
+              </li>
+            </template>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Scene 5: Closer -->
+      <section
+        class="scene scene-closer"
+        data-scene="closer"
+        data-range="0.99,1.0"
+        aria-label="Closing"
+      >
+        <div class="scene-inner">
+          <footer class="closer">
+            <p class="closer-line" data-bind="futures.closer.line"></p>
+            <p class="closer-cta" data-bind="futures.closer.cta"></p>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    <!-- Plain-text fallback for reduced-motion users and screen readers -->
+    <section id="text-version" class="text-fallback" hidden>
+      <h2>Text version</h2>
+      <p>This interactive op-ed is also available as static text below.</p>
+      <div data-text-fallback></div>
+    </section>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
 </html>
