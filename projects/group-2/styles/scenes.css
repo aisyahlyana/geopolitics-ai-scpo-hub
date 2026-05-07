@@ -1628,26 +1628,76 @@ body.stage-muted .cluster {
 }
 .tl-year.is-red { color: var(--economist-red); }
 
-@media (max-width: 1100px) {
+/* Narrow viewports keep the horizontal chart but let it scroll
+   horizontally — the chart's visual identity stays intact, the
+   reader pans through years instead of seeing a vertical list. */
+@media (max-width: 760px) {
   .scene-timeline { min-height: auto; }
   .timeline-sticky {
     position: relative;
     height: auto;
-    padding: clamp(2rem, 5vh, 4rem) clamp(1rem, 4vw, 2rem);
+    padding: clamp(1.5rem, 4vh, 2.5rem) 0;
+    gap: clamp(0.6rem, 1.5vh, 1rem);
   }
-  .tl-columns { grid-template-columns: 1fr; gap: 1rem; }
-  .tl-columns::before { display: none; }
-  .tl-column {
-    grid-column: 1;
-    grid-template-rows: auto auto auto;
-    padding: 0.8rem 0;
-    border-top: 1px solid var(--rule-strong);
+  .timeline-head {
+    padding: 0 clamp(1rem, 4vw, 2rem);
   }
-  .tl-column::before, .tl-column::after { display: none; }
-  .tl-stack { font-size: 0.85rem; }
-  .tl-stack--top { padding-bottom: 0.4rem; }
-  .tl-stack--bottom { padding-top: 0.4rem; }
-  .tl-year { text-align: left; padding: 0.3rem 0; }
+  .timeline-chart {
+    padding: 0 clamp(1rem, 4vw, 2rem);
+    /* The grid scrolls underneath, but band labels and chart
+       structure stay aligned with the article's gutter. */
+  }
+  .timeline-grid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Hairline scroll cue so the reader sees the chart is
+       scrollable without a heavy native scrollbar. */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+    /* Edge fade hints that more chart sits beyond the right edge. */
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0,
+      #000 1.5rem,
+      #000 calc(100% - 1.5rem),
+      transparent 100%);
+    mask-image: linear-gradient(to right,
+      transparent 0,
+      #000 1.5rem,
+      #000 calc(100% - 1.5rem),
+      transparent 100%);
+  }
+  .timeline-grid::-webkit-scrollbar { height: 6px; }
+  .timeline-grid::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 3px;
+  }
+  .tl-columns {
+    /* Force a readable column width; container scrolls horizontally
+       to reveal the rest. ~720px = 8 columns × ~90px each. */
+    min-width: 720px;
+    width: max-content;
+  }
+  .tl-stack {
+    font-size: clamp(0.66rem, 1.6vw, 0.78rem);
+    line-height: 1.25;
+    gap: 0.4rem;
+  }
+  .tl-year { font-size: clamp(0.92rem, 2.6vw, 1.1rem); }
+  .timeline-heading { font-size: clamp(1.25rem, 5vw, 1.7rem); }
+  .timeline-band-label { font-size: 0.62rem; letter-spacing: 0.18em; }
+  .tl-column { padding: 0 clamp(0.3rem, 1vw, 0.6rem); }
+  /* Hint text under the chart so users know the chart scrolls. */
+  .timeline-chart::after {
+    content: "Scroll the chart sideways →";
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(220, 230, 255, 0.45);
+    margin-top: 0.6rem;
+    padding: 0 clamp(1rem, 4vw, 2rem);
+  }
 }
 .reduced-motion .timeline-sticky {
   position: relative;
@@ -2286,4 +2336,205 @@ body.stage-muted .cluster {
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--ink);
+}
+
+/* ============================================================
+   Adaptive layout for pinned panels
+   ------------------------------------------------------------
+   The vh-based sticky panels (gallery, regnet, timeline) work
+   well around 900–1100px tall, but overflow on short viewports
+   and stretch awkwardly on tall ones. The blocks below tune
+   their heights and panel padding for short / medium / tall /
+   ultra-wide screens. Stacked from shortest → tallest, then
+   widest.
+   ============================================================ */
+
+/* ---- Short viewports (panels were overflowing 100vh) ----
+   Triggers on landscape phones and short laptop windows.
+   Sticky panels need less internal padding and the closer at
+   regnet beat 5 needs to stay within 100vh. */
+@media (max-height: 720px) {
+  /* Gallery: shorter pin, tighter image grid. */
+  .scene-gallery { min-height: 180vh; }
+  .gallery-sticky {
+    padding: clamp(0.8rem, 2vh, 1.4rem) clamp(1rem, 4vw, 2.5rem);
+  }
+  .gallery-text { padding: 1rem 1.1rem; }
+  .gallery-figure { aspect-ratio: 16 / 11; }
+  .gallery-heading { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+  .gallery-body { font-size: 0.86rem; line-height: 1.5; }
+
+  /* Regnet: shorter pin, smaller chart, much tighter closer. */
+  .scene-regnet { min-height: 320vh; }
+  .regnet-sticky {
+    padding: clamp(0.7rem, 2vh, 1.3rem) clamp(1rem, 3vw, 2rem);
+  }
+  .regnet-stage-wrap { height: clamp(260px, 42vh, 380px); }
+  .regnet-frame { padding-top: 2.2rem; }
+  .regnet-heading { font-size: clamp(1.25rem, 2.4vw, 1.7rem); }
+  .regnet-lede { font-size: 0.86rem; line-height: 1.4; max-width: 60ch; }
+  .regnet-sticky[data-beat="5"] .regnet-stage-wrap {
+    height: clamp(120px, 20vh, 200px);
+  }
+  .regnet-closer {
+    margin: clamp(1.2rem, 3vh, 2.2rem) auto;
+    padding: clamp(1.2rem, 3vh, 2.2rem) 0;
+    font-size: clamp(0.95rem, 1.7vw, 1.25rem);
+    max-width: 56ch;
+  }
+
+  /* Timeline: shorter pin, leaner header. */
+  .scene-timeline { min-height: 150vh; }
+  .timeline-sticky {
+    padding: clamp(0.7rem, 2vh, 1.2rem) clamp(1rem, 3vw, 2rem) clamp(1rem, 3vh, 2rem);
+  }
+  .timeline-heading { font-size: clamp(1.25rem, 2.4vw, 1.7rem); }
+  .timeline-chart { row-gap: 0.4rem; }
+}
+
+/* ---- Medium-short viewports (721–900px tall) ----
+   Light tuning so the regnet beat-5 closer doesn't push the
+   chart off the bottom of the viewport. */
+@media (max-height: 900px) and (min-height: 721px) {
+  .scene-regnet { min-height: 340vh; }
+  .regnet-stage-wrap { height: clamp(320px, 48vh, 520px); }
+  .regnet-sticky[data-beat="5"] .regnet-stage-wrap {
+    height: clamp(160px, 26vh, 280px);
+  }
+  .regnet-closer {
+    margin: clamp(2rem, 5vh, 3.5rem) auto;
+    padding: clamp(1.8rem, 4.5vh, 3rem) 0;
+  }
+  .scene-gallery { min-height: 200vh; }
+  .scene-timeline { min-height: 160vh; }
+}
+
+/* ---- Tall viewports (≥1100px) ----
+   Cap stretching so the SVG doesn't balloon and everything
+   sits comfortably mid-viewport. */
+@media (min-height: 1100px) {
+  .regnet-stage-wrap { max-height: 720px; }
+  .gallery-sticky {
+    align-content: center;
+  }
+  .gallery-figure { max-height: 360px; }
+  .timeline-chart { max-height: 580px; }
+  .timeline-sticky { justify-content: center; gap: clamp(1.2rem, 2.5vh, 2rem); }
+  .regnet-sticky { align-content: center; gap: clamp(1.2rem, 2.4vh, 2rem); }
+}
+
+/* ---- Ultra-wide viewports (≥1800px) ----
+   Cap content widths so the SVG and chart don't stretch
+   past the readable zone on 4K / ultrawide monitors. */
+@media (min-width: 1800px) {
+  .regnet-frame { max-width: 92rem; }
+  .regnet-head { max-width: 92rem; }
+  .timeline-head { max-width: 84rem; }
+  .timeline-chart { max-width: 84rem; }
+  .gallery-split { max-width: 92rem; margin: 0 auto; }
+  .regnet-closer { max-width: 56ch; }
+}
+
+/* ---- Mid-narrow (700–980px wide) ----
+   Hand-off zone between desktop and the existing narrow rules.
+   Panels stay pinned but content tightens. */
+@media (max-width: 980px) and (min-width: 700px) {
+  .gallery-split { grid-template-columns: minmax(220px, 38%) 1fr; }
+  .gallery-grid { gap: 0.5rem; }
+  .regnet-cluster-label--space,
+  .regnet-cluster-label--ai { font-size: 0.6rem; }
+  .rn-cluster-sub { display: none; }
+  .regnet-stage-wrap { height: clamp(280px, 46vh, 460px); }
+}
+
+/* ---- Very narrow / portrait (<700px wide) ----
+   Stacked / single-column layout for phones. The existing
+   max-width: 980px rule already handles structural collapse;
+   this just trims sizes further. */
+@media (max-width: 700px) {
+  .scene-gallery { min-height: auto; }
+  .gallery-figure { aspect-ratio: 16 / 10; }
+  .gallery-heading { font-size: 1.5rem; }
+
+  .scene-regnet { min-height: auto; }
+  .regnet-heading { font-size: 1.4rem; max-width: 22ch; }
+  .regnet-lede { font-size: 0.86rem; }
+  .regnet-stage-wrap { height: clamp(280px, 56vh, 460px); }
+  .regnet-closer {
+    font-size: 1.05rem;
+    padding: 1.4rem 0;
+    margin: 1.2rem auto;
+  }
+
+  .scene-timeline { min-height: auto; }
+  .timeline-heading { font-size: 1.4rem; }
+
+  /* Tooltip narrows to almost full-screen-width on phones so
+     the description text is actually legible. */
+  .rn-tooltip { width: calc(100vw - 2rem); max-width: 360px; }
+}
+
+/* ============================================================
+   Reading-first layout for mid-size viewports
+   ------------------------------------------------------------
+   Below 1024px wide, the satellite cluster doesn't have enough
+   horizontal room to stay in its outer lane without intruding
+   on the reading column. Hide the cluster, drop the reading
+   column's left lane offset, and let the article take the full
+   width. Liftoff keeps its rocket — that's only visible at the
+   very start of scroll. Stars + sky stay as the backdrop.
+   ============================================================ */
+@media (max-width: 1024px) {
+  :root { --lane: 0vw; }
+  /* Cluster goes away — was occupying the left margin where the
+     reading column wants to live on narrow viewports. */
+  .cluster { opacity: 0 !important; }
+  /* Article scenes regain their full reading width. */
+  .scene:not(.scene-liftoff) .scene-inner {
+    padding-left: clamp(1.4rem, 4vw, 3rem) !important;
+    padding-right: clamp(1.4rem, 4vw, 3rem) !important;
+  }
+  /* Liftoff: drop the wide right padding (no rocket lane needed
+     on a viewport this size, but the rocket is still visible). */
+  .scene-liftoff .scene-inner {
+    padding-right: clamp(1.5rem, 5vw, 4rem) !important;
+  }
+}
+
+/* ============================================================
+   Timeline: keep the horizontal chart on mid-size laptops
+   ------------------------------------------------------------
+   The chart used to collapse to a vertical list at <1100px
+   which meant most laptop windows never saw it. Drop that to
+   <760px and scale the chart down for the in-between range.
+   ============================================================ */
+@media (max-width: 1100px) and (min-width: 761px) {
+  .scene-timeline { min-height: 180vh; }
+  .timeline-chart { row-gap: 0.45rem; }
+  .tl-stack {
+    font-size: clamp(0.66rem, 0.8vw, 0.78rem);
+    line-height: 1.25;
+    gap: 0.45rem;
+  }
+  .tl-year { font-size: clamp(0.92rem, 1.4vw, 1.15rem); }
+  .timeline-heading { font-size: clamp(1.3rem, 2.6vw, 1.8rem); }
+  .timeline-band-label { font-size: 0.66rem; letter-spacing: 0.18em; }
+  .tl-column { padding: 0 clamp(0.25rem, 0.7vw, 0.6rem); }
+}
+
+/* ============================================================
+   Regnet: more dwell so the reader actually reaches beat 5
+   ------------------------------------------------------------
+   Bumping min-height to 460vh gives ~72vh of scroll per beat
+   once the panel is pinned — closer to a full viewport per
+   beat, which is what the chasm-labels narrative needs.
+   ============================================================ */
+.scene-regnet {
+  min-height: 460vh;
+}
+@media (max-height: 720px) {
+  .scene-regnet { min-height: 380vh; }
+}
+@media (max-height: 900px) and (min-height: 721px) {
+  .scene-regnet { min-height: 420vh; }
 }
