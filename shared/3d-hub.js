@@ -215,6 +215,7 @@ export const initLatentSpace = () => {
   scene.add(constellation);
 
   const meshes = [];
+  const realNodeMeshes = [];
   const meshById = new Map();
   const manualLabels = [];
   const uiLayer = document.getElementById('ui-layer');
@@ -276,6 +277,7 @@ export const initLatentSpace = () => {
     constellation.add(mesh);
     meshes.push(mesh);
     meshById.set(data.id, mesh);
+    if (data.isReal) realNodeMeshes.push(mesh);
 
     if (isMobile && data.isReal) {
       const hitGeometry = new THREE.SphereGeometry(nodeSize * 2.2, 16, 16);
@@ -423,6 +425,16 @@ export const initLatentSpace = () => {
     }
   };
 
+  const isBriefingCardEvent = (event) => briefingCard && briefingCard.contains(event.target);
+
+  if (briefingCard) {
+    ['pointerdown', 'touchstart', 'click'].forEach(eventName => {
+      briefingCard.addEventListener(eventName, event => {
+        event.stopPropagation();
+      });
+    });
+  }
+
   const onMouseMove = (event) => {
     if (event.isPrimary === false) return; // Ignore multi-touch
     if (isMobile) return; // Ignore hover physics on mobile
@@ -431,10 +443,37 @@ export const initLatentSpace = () => {
   };
 
   const onClick = (event) => {
+    if (isBriefingCardEvent(event)) return;
+
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(meshes, true);
+
+    const getMobileScreenNode = () => {
+      if (!isMobile) return null;
+      const tapRadius = 56;
+      let bestMatch = null;
+      let bestDistance = Infinity;
+
+      realNodeMeshes.forEach(mesh => {
+        const vector = new THREE.Vector3();
+        mesh.getWorldPosition(vector);
+        vector.project(camera);
+        if (vector.z > 1.0) return;
+
+        const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+        const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
+        const distance = Math.hypot(event.clientX - x, event.clientY - y);
+
+        if (distance < tapRadius && distance < bestDistance) {
+          bestMatch = mesh;
+          bestDistance = distance;
+        }
+      });
+
+      return bestMatch;
+    };
 
     const unzoomMobile = () => {
       activeMobileNode = null;
@@ -459,8 +498,10 @@ export const initLatentSpace = () => {
       });
     };
 
-    if (intersects.length > 0) {
-      let clickedNode = intersects[0].object;
+    const mobileScreenNode = getMobileScreenNode();
+
+    if (mobileScreenNode || intersects.length > 0) {
+      let clickedNode = mobileScreenNode || intersects[0].object;
       if (!clickedNode.userData || !clickedNode.userData.type) {
         clickedNode = clickedNode.parent;
       }
