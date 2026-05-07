@@ -99,7 +99,7 @@ export const initLatentSpace = () => {
         { id: 'p1', type: 'research', title: 'AI & State Surveillance', shortLabel: 'G1', bluf: 'Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'p3', type: 'research', title: 'The Invisible Thirst', shortLabel: 'G3', bluf: 'Amelie Kenney, Dienaba Annie Sagna, Angelina Trefilova, and Anais Servais investigate AI data centers, water scarcity, and the missing facility-level data that weakens environmental governance.', directUrl: 'projects/group-3/', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd4', isReal: false },
-        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", nodeTitle: 'Orbit as Next Frontier', shortLabel: 'G2', bluf: 'Asger Møller Grimberg examines orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
+        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", nodeTitle: 'Orbit as Next Frontier', shortLabel: 'G2', bluf: 'Andrew Petrecca-Berthelet, Wendi Gjata, Lydia Jebakumar, Julia Zahary, and Asger Grimberg examine orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
@@ -116,7 +116,7 @@ export const initLatentSpace = () => {
     {
       x: 10, // Scaled in from 17
       nodes: [
-        { id: 'p4', type: 'research', title: 'Group 4', shortLabel: 'G4', bluf: 'Awaiting final project submission; this node still points to the isolated Group 4 sandbox.', directUrl: 'projects/group-4/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p4', type: 'research', title: 'Downstream of the Frontier', shortLabel: 'G4', bluf: 'Aleksandra Majowka, Abe de Ruijter, Ram Erik Glomseth, Shariya Ashraf, and Sebastian Ramirez Hernandez examine AI as a privately held frontier technology and national-security asset.', directUrl: 'projects/group-4/', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd8', isReal: false },
         { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', shortLabel: '07', bluf: 'Tracing competing intellectual frames, from realism to techno-accelerationism, that now shape policy imagination.', url: 'primer/module-07.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd9', isReal: false },
