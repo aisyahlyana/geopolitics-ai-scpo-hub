@@ -84,49 +84,96 @@ export const initLatentSpace = () => {
     {
       x: -10, // Scaled in from -16
       nodes: [
-        { id: 'm1', type: 'anchor', title: 'The Utopian Dawn', shortLabel: '01', bluf: 'The "End of History" illusion and the Clintonian wager that digital openness would dissolve borders.', url: 'primer/module-01.html', color: 0x5e84c6, size: 1.5, isReal: true },
+        { id: 'm1', type: 'anchor', title: 'The Utopian Dawn', shortLabel: '01', mobileLabel: '1 Utopia', bluf: 'The "End of History" illusion and the Clintonian wager that digital openness would dissolve borders.', url: 'primer/module-01.html', color: 0x5e84c6, size: 1.5, isReal: true },
         { id: 'd1', isReal: false },
-        { id: 'm2', type: 'anchor', title: 'The Rebuttal', shortLabel: '02', bluf: 'China\'s foundational rebuttal and the architecture of sovereignty built against liberal internet universalism.', url: 'primer/module-02.html', color: 0x5e84c6, size: 1.5, isReal: true },
+        { id: 'm2', type: 'anchor', title: 'The Rebuttal', shortLabel: '02', mobileLabel: '2 Rebuttal', bluf: 'China\'s foundational rebuttal and the architecture of sovereignty built against liberal internet universalism.', url: 'primer/module-02.html', color: 0x5e84c6, size: 1.5, isReal: true },
         { id: 'd2', isReal: false },
-        { id: 'm3', type: 'anchor', title: 'The Rupture', shortLabel: '03', bluf: 'The 2013 Snowden revelations and the collapse of trust that turned infrastructure into a sovereignty problem.', url: 'primer/module-03.html', color: 0x5e84c6, size: 1.5, isReal: true },
+        { id: 'm3', type: 'anchor', title: 'The Rupture', shortLabel: '03', mobileLabel: '3 Rupture', bluf: 'The 2013 Snowden revelations and the collapse of trust that turned infrastructure into a sovereignty problem.', url: 'primer/module-03.html', color: 0x5e84c6, size: 1.5, isReal: true },
       ]
     },
     {
       x: -3.5, // Scaled in from -5
       nodes: [
         { id: 'd3', isReal: false },
-        { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', shortLabel: '04', bluf: 'The balkanization of the web into competing sovereign stacks and the end of seamless digital globalization.', url: 'primer/module-04.html', color: 0x5e84c6, size: 1.5, isReal: true },
-        { id: 'p1', type: 'research', title: 'AI & State Surveillance', shortLabel: 'G1', bluf: 'Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
-        { id: 'p3', type: 'research', title: 'The Invisible Thirst', shortLabel: 'G3', bluf: 'Amelie Kenney, Dienaba Annie Sagna, Angelina Trefilova, and Anais Servais investigate AI data centers, water scarcity, and the missing facility-level data that weakens environmental governance.', directUrl: 'projects/group-3/', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', shortLabel: '04', mobileLabel: '4 Splinternet', bluf: 'The balkanization of the web into competing sovereign stacks and the end of seamless digital globalization.', url: 'primer/module-04.html', color: 0x5e84c6, size: 1.5, isReal: true },
+        { id: 'p1', type: 'research', title: 'AI & State Surveillance', shortLabel: 'G1', mobileLabel: 'Surveillance', bluf: 'Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p3', type: 'research', title: 'The Invisible Thirst', shortLabel: 'G3', mobileLabel: 'Water', bluf: 'Amelie Kenney, Dienaba Annie Sagna, Angelina Trefilova, and Anais Servais investigate AI data centers, water scarcity, and the missing facility-level data that weakens environmental governance.', directUrl: 'projects/group-3/', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd4', isReal: false },
-        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", nodeTitle: 'Orbit as Next Frontier', shortLabel: 'G2', bluf: 'Andrew Petrecca-Berthelet, Wendi Gjata, Lydia Jebakumar, Julia Zahary, and Asger Grimberg examine orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
+        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", nodeTitle: 'Orbit as Next Frontier', shortLabel: 'G2', mobileLabel: 'Orbit', bluf: 'Andrew Petrecca-Berthelet, Wendi Gjata, Lydia Jebakumar, Julia Zahary, and Asger Grimberg examine orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
       x: 3.5, // Scaled in from 6
       nodes: [
-        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', shortLabel: '05', bluf: 'The return of the production function: compute, energy, hardware, and supply-chain chokepoints.', url: 'primer/module-05.html', color: 0xc56e42, size: 1.5, isReal: true },
+        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', shortLabel: '05', mobileLabel: '5 Sovereignty', bluf: 'The return of the production function: compute, energy, hardware, and supply-chain chokepoints.', url: 'primer/module-05.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd5', isReal: false },
-        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
+        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', mobileLabel: '6 Policy', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
-        { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', nodeTitle: 'Digital Sovereignty', shortLabel: 'G5', bluf: 'Alma Ullén, Camila Nadalini de Godoy, Ishie Pasricha, Natalia Feinberg, and Rouane Arafa examine how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', nodeTitle: 'Digital Sovereignty', shortLabel: 'G5', mobileLabel: 'Dependence', bluf: 'Alma Ullén, Camila Nadalini de Godoy, Ishie Pasricha, Natalia Feinberg, and Rouane Arafa examine how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd7', isReal: false }
       ]
     },
     {
       x: 10, // Scaled in from 17
       nodes: [
-        { id: 'p4', type: 'research', title: 'Downstream of the Frontier', shortLabel: 'G4', bluf: 'Aleksandra Majowka, Abe de Ruijter, Ram Erik Glomseth, Shariya Ashraf, and Sebastian Ramirez Hernandez examine AI as a privately held frontier technology and national-security asset.', directUrl: 'projects/group-4/', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p4', type: 'research', title: 'Downstream of the Frontier', shortLabel: 'G4', mobileLabel: 'Power', bluf: 'Aleksandra Majowka, Abe de Ruijter, Ram Erik Glomseth, Shariya Ashraf, and Sebastian Ramirez Hernandez examine AI as a privately held frontier technology and national-security asset.', directUrl: 'projects/group-4/', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd8', isReal: false },
-        { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', shortLabel: '07', bluf: 'Tracing competing intellectual frames, from realism to techno-accelerationism, that now shape policy imagination.', url: 'primer/module-07.html', color: 0xc56e42, size: 1.5, isReal: true },
+        { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', shortLabel: '07', mobileLabel: '7 Ideology', bluf: 'Tracing competing intellectual frames, from realism to techno-accelerationism, that now shape policy imagination.', url: 'primer/module-07.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd9', isReal: false },
-        { id: 'm8', type: 'anchor', title: 'The Collision of Frames', shortLabel: '08', bluf: 'The core tradeoffs that will dictate the future global order: openness, enclosure, legitimacy, and power.', url: 'primer/module-08.html', color: 0xc56e42, size: 1.5, isReal: true }
+        { id: 'm8', type: 'anchor', title: 'The Collision of Frames', shortLabel: '08', mobileLabel: '8 Collision', bluf: 'The core tradeoffs that will dictate the future global order: openness, enclosure, legitimacy, and power.', url: 'primer/module-08.html', color: 0xc56e42, size: 1.5, isReal: true }
       ]
     }
   ];
 
   const nodesData = [];
   const layerStructure = [];
+  const mobilePositions = {
+    m1: { x: -2.8, y: 11.0, z: 0.0 },
+    m2: { x: 2.8, y: 11.0, z: 0.0 },
+    m3: { x: -4.2, y: 7.0, z: 0.0 },
+    m4: { x: -2.8, y: 3.0, z: 0.0 },
+    m5: { x: -1.4, y: -1.0, z: 0.0 },
+    m6: { x: -2.8, y: -5.0, z: 0.0 },
+    m7: { x: 2.8, y: -5.0, z: 0.0 },
+    m8: { x: -1.4, y: -9.0, z: 0.0 },
+    p1: { x: 1.4, y: 7.0, z: 0.3 },
+    p2: { x: 2.8, y: 3.0, z: 0.3 },
+    p3: { x: 4.2, y: -1.0, z: 0.3 },
+    p4: { x: -4.2, y: -9.0, z: 0.3 },
+    p5: { x: 4.2, y: -9.0, z: 0.3 }
+  };
+  const mobileDummyPositions = {
+    d1: { x: 0, y: 11.0, z: 0.2 },
+    d2: { x: -1.4, y: 7.0, z: 0.2 },
+    d3: { x: 4.2, y: 7.0, z: 0.2 },
+    d4: { x: 0.0, y: 3.0, z: 0.2 },
+    d5: { x: -4.2, y: -1.0, z: 0.2 },
+    d6: { x: 1.4, y: -1.0, z: 0.2 },
+    d7: { x: 0, y: -5.0, z: 0.2 },
+    d8: { x: 1.4, y: -9.0, z: 0.2 }
+  };
+  const mobileRows = [
+    ['m1', 'd1', 'm2'],
+    ['m3', 'd2', 'p1', 'd3'],
+    ['m4', 'd4', 'p2'],
+    ['d5', 'm5', 'd6', 'p3'],
+    ['m6', 'd7', 'm7'],
+    ['p4', 'm8', 'd8', 'p5']
+  ];
+  const mobileEdges = [
+    // Row structure
+    ['m1', 'd1'], ['d1', 'm2'], ['m1', 'm2'],
+    ['m3', 'd2'], ['d2', 'p1'], ['p1', 'd3'], ['m3', 'p1'], ['d2', 'd3'],
+    ['m4', 'd4'], ['d4', 'p2'], ['m4', 'p2'],
+    ['d5', 'm5'], ['m5', 'd6'], ['d6', 'p3'], ['d5', 'd6'], ['m5', 'p3'],
+    ['m6', 'd7'], ['d7', 'm7'], ['m6', 'm7'],
+    ['p4', 'm8'], ['m8', 'd8'], ['d8', 'p5'], ['p4', 'd8'], ['m8', 'p5'],
+
+    // Desktop-like density on mobile: every node links to every node in the adjacent row.
+    ...mobileRows.slice(0, -1).flatMap((row, rowIndex) =>
+      row.flatMap(fromId => mobileRows[rowIndex + 1].map(toId => [fromId, toId]))
+    )
+  ];
 
   networkStructure.forEach((layer, layerIndex) => {
     const nodeCount = layer.nodes.length;
@@ -139,14 +186,21 @@ export const initLatentSpace = () => {
       const internalSpread = (yRange / 2) - (i * (yRange / (nodeCount - 1)));
 
       // Horizontal mode: Layers shift left/right (-10 to 10), nodes stack vertically
-      // Mobile mode: Layers shift top/down (+9 to -9), nodes stack horizontally
-      const px = isMobile ? internalSpread * 0.82 : layer.x;
-      const py = isMobile ? -layer.x * 0.8 : internalSpread;
+      const mobilePosition = nData.isReal ? mobilePositions[nData.id] : mobileDummyPositions[nData.id];
+      if (isMobile && !mobilePosition && !nData.isReal) {
+        return;
+      }
+      if (isMobile && !mobilePosition) {
+        console.warn(`Missing mobile network position for ${nData.id}`);
+      }
+      const px = isMobile ? (mobilePosition?.x ?? 0) : layer.x;
+      const py = isMobile ? (mobilePosition?.y ?? 0) : internalSpread;
+      const pz = isMobile ? (mobilePosition?.z ?? 0) : z;
 
       const nodeObj = {
         ...nData,
         layer: layerIndex,
-        position: new THREE.Vector3(px, py, z),
+        position: new THREE.Vector3(px, py, pz),
       };
 
       if (!nodeObj.isReal) {
@@ -165,25 +219,28 @@ export const initLatentSpace = () => {
   scene.add(constellation);
 
   const meshes = [];
+  const meshById = new Map();
   const manualLabels = [];
   const uiLayer = document.getElementById('ui-layer');
 
   // Replace chaotic shaders with premium architectural materials
   nodesData.forEach(data => {
-    const nodeSize = data.type === 'anchor' ? data.size * 0.55 : (data.type === 'research' ? data.size * 0.58 : data.size * 0.55);
+    const nodeSize = data.type === 'anchor'
+      ? data.size * (isMobile ? 0.5 : 0.55)
+      : (data.type === 'research' ? data.size * (isMobile ? 0.48 : 0.58) : data.size * (isMobile ? 0.48 : 0.55));
     const geometry = new THREE.SphereGeometry(nodeSize, 32, 32);
     let material;
 
     if (data.type === 'dummy') {
       material = new THREE.MeshPhysicalMaterial({
-        color: 0xcbd5e1, // Brighter, slate-grey base so it reads against the dark background
+        color: isMobile ? 0xf8fafc : 0xcbd5e1,
         metalness: 0.1,
-        roughness: 0.4, // Less rough so it catches some specular highlights from the lights
-        transmission: 0.4, // Less glass-like, more solid frosted
-        opacity: 0.8, // Drastically increased from 0.05
+        roughness: isMobile ? 0.28 : 0.4,
+        transmission: isMobile ? 0.18 : 0.4,
+        opacity: isMobile ? 0.92 : 0.8,
         transparent: true,
-        emissive: 0x1e293b, // Glow slightly so it is always visible
-        emissiveIntensity: 0.3
+        emissive: isMobile ? 0xe2e8f0 : 0x1e293b,
+        emissiveIntensity: isMobile ? 0.55 : 0.3
       });
     } else if (data.type === 'anchor') {
       if (data.id.match(/m[1-4]/)) {
@@ -222,38 +279,38 @@ export const initLatentSpace = () => {
 
     constellation.add(mesh);
     meshes.push(mesh);
+    meshById.set(data.id, mesh);
 
     // Typography Labels
     if (data.type === 'anchor' || data.type === 'research') {
       const isAnchor = data.type === 'anchor';
-      const showTitle = !isMobile || !isAnchor;
-      const isMobileResearch = isMobile && !isAnchor;
+      const mobileLabel = data.mobileLabel || data.shortLabel;
       const div = document.createElement('div');
       div.className = 'node-label';
       div.dataset.nodeId = data.id;
       div.dataset.nodeType = data.type;
 
-      div.innerHTML = showTitle
-        ? `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.nodeTitle || data.title}</span>`
-        : `<span>${data.shortLabel}</span>`;
+      div.innerHTML = isMobile
+        ? `<span>${mobileLabel}</span>`
+        : `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.nodeTitle || data.title}</span>`;
 
       div.style.color = '#f6efe5';
       div.style.fontFamily = 'Inter, -apple-system, sans-serif';
-      div.style.fontSize = isMobile ? (isMobileResearch ? '0.56rem' : '0.62rem') : (isAnchor ? '0.74rem' : '0.68rem');
+      div.style.fontSize = isMobile ? '0.6rem' : (isAnchor ? '0.74rem' : '0.68rem');
       div.style.fontWeight = '600';
-      div.style.letterSpacing = isMobile ? (isMobileResearch ? '0.02em' : '0.12em') : '0.03em';
+      div.style.letterSpacing = isMobile ? '0.04em' : '0.03em';
       div.style.lineHeight = '1.18';
-      div.style.whiteSpace = isMobileResearch ? 'normal' : (isMobile ? 'nowrap' : 'normal');
-      div.style.maxWidth = isMobile ? (isMobileResearch ? '190px' : 'none') : (isAnchor ? '144px' : '124px');
+      div.style.whiteSpace = isMobile ? 'nowrap' : 'normal';
+      div.style.maxWidth = isMobile ? 'none' : (isAnchor ? '144px' : '124px');
       div.style.textAlign = 'center';
-      div.style.textWrap = isMobileResearch ? 'balance' : 'auto';
+      div.style.textWrap = 'auto';
 
       div.style.background = isAnchor ? 'rgba(19, 15, 12, 0.62)' : 'rgba(39, 53, 33, 0.82)';
       div.style.border = isAnchor ? '1px solid rgba(243, 236, 224, 0.16)' : '1px solid rgba(188, 214, 178, 0.22)';
       div.style.backdropFilter = 'blur(6px)';
       div.style.WebkitBackdropFilter = 'blur(6px)';
-      div.style.padding = isMobile ? (isMobileResearch ? '0.3rem 0.52rem' : '0.22rem 0.48rem') : (isAnchor ? '0.28rem 0.78rem' : '0.24rem 0.68rem');
-      div.style.borderRadius = isMobileResearch ? '14px' : '9999px';
+      div.style.padding = isMobile ? '0.24rem 0.52rem' : (isAnchor ? '0.28rem 0.78rem' : '0.24rem 0.68rem');
+      div.style.borderRadius = '9999px';
       div.style.boxShadow = '0 10px 22px rgba(0, 0, 0, 0.22)';
 
       div.style.opacity = '1';
@@ -273,14 +330,14 @@ export const initLatentSpace = () => {
   const createPipeline = (pt1, pt2) => {
     const distance = pt1.distanceTo(pt2);
     // Slightly thicker connecting lines
-    const geometry = new THREE.CylinderGeometry(0.025, 0.025, distance, 6);
+    const geometry = new THREE.CylinderGeometry(isMobile ? 0.036 : 0.025, isMobile ? 0.036 : 0.025, distance, 6);
     geometry.translate(0, distance / 2, 0);
     geometry.rotateX(Math.PI / 2);
 
     // Highly transparent glass lines for the passive state
     const mat = new THREE.MeshBasicMaterial({
-      color: 0xcbd5e1, // Match dummy node color
-      opacity: 0.35, // Increased from 0.25 to make the network clearly visible
+      color: isMobile ? 0xf8fafc : 0xcbd5e1,
+      opacity: isMobile ? 0.58 : 0.35,
       transparent: true,
       blending: THREE.AdditiveBlending
     });
@@ -291,26 +348,35 @@ export const initLatentSpace = () => {
     return cylinder;
   };
 
-  // Build the dense network by connecting every node in Layer N to every node in Layer N+1
-  for (let l = 0; l < layerStructure.length - 1; l++) {
-    const layerA = layerStructure[l];
-    const layerB = layerStructure[l + 1];
+  const connectMeshes = (meshA, meshB) => {
+    if (!meshA || !meshB) return;
+    const pipe = createPipeline(meshA.position, meshB.position);
+    constellation.add(pipe);
 
-    layerA.forEach(nodeAData => {
-      const meshA = meshes.find(m => m.userData.id === nodeAData.id);
-      layerB.forEach(nodeBData => {
-        const meshB = meshes.find(m => m.userData.id === nodeBData.id);
+    if (meshA.userData.isReal) meshA.userData.connectedLines.push(pipe);
+    if (meshB.userData.isReal) meshB.userData.connectedLines.push(pipe);
+  };
 
-        const pipe = createPipeline(meshA.position, meshB.position);
-        constellation.add(pipe);
+  const connectById = (fromId, toId) => {
+    connectMeshes(meshById.get(fromId), meshById.get(toId));
+  };
 
-        // We track connections for REAL nodes so we can highlight them on hover
-        if (nodeAData.isReal || nodeBData.isReal) {
-          if (nodeAData.isReal) meshA.userData.connectedLines.push(pipe);
-          if (nodeBData.isReal) meshB.userData.connectedLines.push(pipe);
-        }
+  if (isMobile) {
+    mobileEdges.forEach(([fromId, toId]) => connectById(fromId, toId));
+  } else {
+    // Build the dense network by connecting every node in Layer N to every node in Layer N+1
+    for (let l = 0; l < layerStructure.length - 1; l++) {
+      const layerA = layerStructure[l];
+      const layerB = layerStructure[l + 1];
+
+      layerA.forEach(nodeAData => {
+        const meshA = meshById.get(nodeAData.id);
+        layerB.forEach(nodeBData => {
+          const meshB = meshById.get(nodeBData.id);
+          connectMeshes(meshA, meshB);
+        });
       });
-    });
+    }
   }
 
 
@@ -369,14 +435,14 @@ export const initLatentSpace = () => {
 
       gsap.to(camera.position, {
         x: 0,
-        y: 4,
-        z: 42,
+        y: isMobile ? 1.0 : 4,
+        z: isMobile ? 41 : 42,
         duration: 1.0,
         ease: "power2.out"
       });
       gsap.to(controls.target, {
         x: 0,
-        y: 0,
+        y: isMobile ? 1.0 : 0,
         z: 0,
         duration: 1.0,
         ease: "power2.out"
@@ -395,7 +461,7 @@ export const initLatentSpace = () => {
           if (activeMobileNode !== clickedNode) {
             activeMobileNode = clickedNode;
 
-            // Show floating card directly below node using GSAP
+            // Show a mobile bottom sheet for the selected node.
             hoveredNode = clickedNode;
             updateBriefingCard(data);
 
@@ -408,8 +474,8 @@ export const initLatentSpace = () => {
             // Pan to center the node and its pill
             gsap.to(camera.position, {
               x: clickedNode.position.x,
-              y: clickedNode.position.y - 1.5, // Slightly lower the camera to center BOTH node and pill
-              z: 28, // Less intense zoom on mobile so pill fits on screen
+              y: clickedNode.position.y,
+              z: 44,
               duration: 1.2,
               ease: "power2.out"
             });
@@ -455,19 +521,21 @@ export const initLatentSpace = () => {
     const elapsedTime = clock.getElapsedTime();
 
     // Slow constellation drift
-    if (!hoveredNode) {
+    if (!isMobile && !hoveredNode) {
       constellation.rotation.y += 0.00008;
       constellation.rotation.x += 0.00002;
     }
 
     meshes.forEach(mesh => {
       // Common slow rotation
-      mesh.rotation.y += 0.0008;
+      if (!isMobile) {
+        mesh.rotation.y += 0.0008;
+      }
 
       // Pulse effect logic
       const pulseSpeed = (mesh.userData.type === 'anchor') ? 2 : 1;
-      const pulseAmount = (mesh.userData.type === 'anchor') ? 0.025 : 0.012;
-      const scaleBase = (hoveredNode === mesh) ? 1.2 : 1.0;
+      const pulseAmount = isMobile ? 0.006 : ((mesh.userData.type === 'anchor') ? 0.025 : 0.012);
+      const scaleBase = (hoveredNode === mesh) ? (isMobile ? 1.08 : 1.2) : 1.0;
       const scale = scaleBase + Math.sin(elapsedTime * pulseSpeed + mesh.position.x) * pulseAmount;
       mesh.scale.set(scale, scale, scale);
     });
@@ -630,7 +698,15 @@ export const initLatentSpace = () => {
   };
 
   // Handle Resize
+  let hasQueuedBreakpointReload = false;
   window.addEventListener('resize', () => {
+    const nextIsMobile = window.innerWidth <= 768;
+    if (nextIsMobile !== isMobile && !hasQueuedBreakpointReload) {
+      hasQueuedBreakpointReload = true;
+      window.location.reload();
+      return;
+    }
+
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
