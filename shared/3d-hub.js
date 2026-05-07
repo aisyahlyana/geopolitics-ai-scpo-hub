@@ -71,11 +71,7 @@ export const initLatentSpace = () => {
   controls.enableZoom = false; // Disable scroll wheel zooming to prevent trapping page scroll
 
   if (isMobile) {
-    // Make 1-finger swipe directly pan the camera, aligning with typical vertical scroll expectations
-    controls.touches = {
-      ONE: THREE.TOUCH.PAN,
-      TWO: THREE.TOUCH.DOLLY_ROTATE
-    };
+    controls.enabled = false;
   }
   // Data Definition
 
@@ -281,6 +277,20 @@ export const initLatentSpace = () => {
     meshes.push(mesh);
     meshById.set(data.id, mesh);
 
+    if (isMobile && data.isReal) {
+      const hitGeometry = new THREE.SphereGeometry(nodeSize * 2.2, 16, 16);
+      const hitMaterial = new THREE.MeshBasicMaterial({
+        transparent: true,
+        opacity: 0,
+        depthWrite: false
+      });
+      const hitMesh = new THREE.Mesh(hitGeometry, hitMaterial);
+      hitMesh.position.copy(data.position);
+      hitMesh.userData = mesh.userData;
+      constellation.add(hitMesh);
+      meshes.push(hitMesh);
+    }
+
     // Typography Labels
     if (data.type === 'anchor' || data.type === 'research') {
       const isAnchor = data.type === 'anchor';
@@ -467,22 +477,22 @@ export const initLatentSpace = () => {
 
             gsap.killTweensOf(briefingCard);
             gsap.fromTo(briefingCard,
-              { autoAlpha: 0, scale: 0.95, y: -10, xPercent: -50, yPercent: 0 },
-              { autoAlpha: 1, scale: 1, y: 0, duration: 0.4, ease: "power2.out" }
+              { autoAlpha: 0, scale: 0.95, y: -10, xPercent: 0, yPercent: 0 },
+              { autoAlpha: 1, scale: 1, y: 0, xPercent: 0, yPercent: 0, duration: 0.4, ease: "power2.out" }
             );
 
-            // Pan to center the node and its pill
+            // Nudge the mobile network toward the selection without losing the full layout.
             gsap.to(camera.position, {
-              x: clickedNode.position.x,
-              y: clickedNode.position.y,
-              z: 44,
+              x: clickedNode.position.x * 0.22,
+              y: 1.0 + clickedNode.position.y * 0.18,
+              z: 41.8,
               duration: 1.2,
               ease: "power2.out"
             });
             gsap.to(controls.target, {
-              x: clickedNode.position.x,
-              y: clickedNode.position.y,
-              z: clickedNode.position.z,
+              x: clickedNode.position.x * 0.22,
+              y: 1.0 + clickedNode.position.y * 0.18,
+              z: 0,
               duration: 1.2,
               ease: "power2.out"
             });
@@ -642,11 +652,20 @@ export const initLatentSpace = () => {
         briefingCard.style.visibility = 'hidden';
       } else {
         if (isMobile) {
-          briefingCard.style.left = '50%';
-          briefingCard.style.top = 'auto';
-          briefingCard.style.bottom = '0.75rem';
+          const margin = 12;
+          const cardWidth = briefingCard.getBoundingClientRect().width || Math.min(280, window.innerWidth - margin * 2);
+          const cardHeight = briefingCard.offsetHeight || 180;
+          const left = margin;
+          const top = Math.max(margin, Math.min(y - cardHeight / 2, window.innerHeight - cardHeight - margin));
+
+          briefingCard.style.left = `${left}px`;
+          briefingCard.style.right = 'auto';
+          briefingCard.style.top = `${top}px`;
+          briefingCard.style.bottom = 'auto';
+          briefingCard.style.transformOrigin = 'left center';
         } else {
           briefingCard.style.left = `${x}px`;
+          briefingCard.style.right = 'auto';
           briefingCard.style.top = `${y}px`;
           briefingCard.style.bottom = 'auto';
         }

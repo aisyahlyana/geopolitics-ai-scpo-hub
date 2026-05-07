@@ -780,7 +780,7 @@ body::before {
   #briefing-card {
     position: fixed !important;
     box-sizing: border-box !important;
-    width: calc(100vw - 1rem) !important;
+    width: min(280px, calc(100vw - 1.5rem)) !important;
     max-width: none !important;
     max-height: calc(100dvh - 1.5rem) !important;
     overflow-y: auto !important;
